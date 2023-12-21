@@ -1,16 +1,10 @@
 class Solution {
 public:
     int maxWidthOfVerticalArea(vector<vector<int>>& points) {
-        set<int>s;
-        for(int i=0;i<points.size();i++){
-            s.insert(points[i][0]);
-        }
+        sort(points.begin(),points.end());
         int max_dist=0;
-        int x = *(s.begin());
-        for(auto it:s){
-            int y = it;
-            max_dist = max(max_dist , (y-x));
-            x=y;
+        for(int i=1;i<points.size();i++){
+            max_dist = max(max_dist,(points[i][0]-points[i-1][0]));
         }
         return max_dist;
     }
