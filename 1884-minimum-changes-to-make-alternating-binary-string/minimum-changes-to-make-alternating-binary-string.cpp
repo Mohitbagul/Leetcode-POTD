@@ -17,6 +17,6 @@ public:
                 cnt2++;
             }
         }
-        return min(cnt1,cnt2);
+        return cnt1>cnt2 ? cnt2:cnt1;
     }
 };
