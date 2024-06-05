@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<string> commonChars(vector<string>& words) {
 
-        map<char,int>mp;
+        unordered_map<char,int>mp;
         string s = words[0];
         int len = s.length();
         for(int i=0;i<len;i++){
@@ -11,7 +11,7 @@ public:
 
         for(int i=1;i<words.size();i++){
             string m = words[i];
-            map<char,int>mp1 = mp;
+            unordered_map<char,int>mp1 = mp;
 
             for(int j=0;j<m.length();j++){
                 if(mp.find(m[j])!=mp.end()){
