@@ -1,27 +1,27 @@
 class Solution {
 public:
-
-    bool solve(string& s,vector<string>& wordDict,int prev,int next, vector<vector<int>>& dp){
-
-        if(next==s.length()) return false;
-        if(dp[prev][next]!=-1)return dp[prev][next];
-        bool a = false;
-        if(find(wordDict.begin(),wordDict.end(),s.substr(prev,next-prev+1))!=wordDict.end()){
-            if(next+1==s.length()) return true;
-             a = solve(s,wordDict,next+1,next+1, dp);
+    
+    bool check(string s, set<string> &st, map<string,bool> &mp){
+        int n=s.length();
+        
+        if(n==0) return true;
+        
+        if(mp.find(s)!=mp.end()) return mp[s];
+        
+        for(int i=0;i<s.length();i++){
+            string pre=s.substr(0,i+1); // current prefix string
+            string suf=s.substr(i+1); // left over suffix string
+            
+            if(st.find(pre)!=st.end() && (st.find(suf)!=st.end() || check(suf,st,mp)==true)) return mp[s]=true;
         }
-        bool b = solve(s,wordDict,prev,next+1, dp);
-
-        return dp[prev][next] = a||b;
+        return mp[s]=false;
     }
-    bool wordBreak(string s, vector<string>& wordDict) {
-        int prev=0,next=0;
-        // set<string>st;
-        // for(int i=0;i<wordDict.size();i++){
-        //     st.insert(wordDict[i]);
-        // }
-
-        vector<vector<int>>dp(s.length()+2,vector<int>(s.length()+2,-1));
-        return solve(s,wordDict,prev,next,dp);
+    
+    bool wordBreak(string s, vector<string> &dict) {
+        set<string> st;
+        for(int i=0;i<dict.size();i++) st.insert(dict[i]);
+        
+        map<string,bool> mp;
+        return check(s,st,mp);
     }
 };
