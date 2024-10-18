@@ -1,27 +1,30 @@
 class Solution {
 public:
-    void solve(unordered_map<int,int>&mp,int i,vector<int>& nums,int cnt){
+    void solve(int &ans,int i,vector<int>& nums,int cnt,int target){
 
         if(i == nums.size()){
-            mp[cnt]++;
+
+            if(cnt == target){
+                ans++;
+            }
+
             return;
         }
 
-        solve(mp,i+1,nums,cnt|nums[i]);
-        solve(mp,i+1,nums,cnt);
+        solve(ans,i+1,nums,cnt|nums[i],target);
+        solve(ans,i+1,nums,cnt,target);
     }
 
     int countMaxOrSubsets(vector<int>& nums) {
-        unordered_map<int,int>mp;
-        int i=0,cnt=0;
-        solve(mp,i,nums,cnt);
-        int n=INT_MIN,ans=0;
-        for(auto it:mp){
-            if(it.first>n){
-                n=it.first;
-                ans = it.second;
-            }
+
+        int target=0,ans=0,i=0,cnt=0;
+
+        for(int i=0;i<nums.size();i++){
+            target |= nums[i];
         }
+       
+        solve(ans,i,nums,cnt,target);
+        
         return ans;
     }
 };
